@@ -10,10 +10,17 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  const handleRegister = async(e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
+
+    const email = form.email.value;
+    const photo = form.photo;
+    const file = photo.files[0];
+    console.log(file);
+    const password = form.password.value;
+
     if (name.length < 5) {
       setNameError("Name Should be at least 6 character");
       return;
@@ -21,52 +28,69 @@ const Register = () => {
       setNameError("");
     }
 
-    const email = form.email.value;
-    const photo = form.photo;
-    const file = photo.files[0];
-    console.log(file);
+    const upperCase = /[A-Z]/;
+    const lowerCase = /[a-z]/;
 
+    if(!upperCase.test(password)){
+      return alert("Need an Uppercase");
+    }
+    if(!lowerCase.test(password)){
+      return alert("Need a lowercase");  
+    }
 
-    const password = form.password.value;
     console.log({ name, email, password, photo });
 
-
-    const res = await axios.post(`https://api.imgbb.com/1/upload?expiration=600&key=65be08a10a7a8d8e12d37df6d7197e6f`,{image:file},{
-      headers:{
-        'Content-Type':'multipart/form-data'
+    const res = await axios.post(
+      `https://api.imgbb.com/1/upload?expiration=600&key=65be08a10a7a8d8e12d37df6d7197e6f`,
+      { image: file },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }
-    })
+    );
 
     console.log(res.data);
-    
 
     const mainPhotoUrl = res.data.data.display_url;
 
-    if(res.data.success==true){
+    const formData = {
+      name,
+      email,
+      mainPhotoUrl,
+      password,
+    };
 
-    createUser(email, password)
-      .then((result) => {
-        const user = result.user;
-        console.log(user);
-        updateUser({ displayName: name, photoURL: mainPhotoUrl })
-          .then(() => {
-            setUser({ ...user, displayName: name, photoURL: photo });
-            navigate("/");
-          })
-          .catch((error) => {
-            console.log(error);
-            setUser(user);
-          });
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alert(errorCode, errorMessage);
-        // ..
-      });
+    if (res.data.success == true) {
+      createUser(email, password)
+        .then((result) => {
+          const user = result.user;
+          console.log(user);
+          updateUser({ displayName: name, photoURL: mainPhotoUrl })
+            .then(() => {
+              setUser({ ...user, displayName: name, photoURL: photo });
+              axios
+                .post("http://localhost:5000/users", formData)
+                .then((res) => {
+                  console.log(res.data);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+              navigate("/");
+            })
+            .catch((error) => {
+              console.log(error);
+              setUser(user);
+            });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert(errorCode, errorMessage);
+          // ..
+        });
     }
-
-
   };
 
   return (

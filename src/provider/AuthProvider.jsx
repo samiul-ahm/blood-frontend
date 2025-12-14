@@ -8,6 +8,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import axios from "axios";
 
 export const AuthContext = createContext();
 
@@ -16,6 +17,7 @@ const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState("");
 
   // console.log(loading, user);
 
@@ -39,6 +41,18 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
+  console.log(user);
+
+  useEffect(()=>{
+    if(!user) return;
+     axios
+      .get(`http://localhost:5000/users/role/${user.email}`)
+      .then((res) => {
+        console.log(res.data.role);
+        setLoading(false);
+      });
+  },[user])
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -48,6 +62,7 @@ const AuthProvider = ({ children }) => {
       unsubscribe();
     };
   }, []);
+
 
   const authData = {
     user,
