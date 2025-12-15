@@ -43,16 +43,6 @@ const AuthProvider = ({ children }) => {
 
   console.log(user);
 
-  useEffect(()=>{
-    if(!user) return;
-     axios
-      .get(`http://localhost:5000/users/role/${user.email}`)
-      .then((res) => {
-        console.log(res.data.role);
-        setLoading(false);
-      });
-  },[user])
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -63,6 +53,14 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!user) return;
+    axios.get(`http://localhost:5000/users/role/${user.email}`).then((res) => {
+      setRole(res.data.role);
+    });
+  }, [user]);
+
+  console.log(role);
 
   const authData = {
     user,
@@ -73,6 +71,7 @@ const AuthProvider = ({ children }) => {
     loading,
     setLoading,
     updateUser,
+    role
   };
 
   return <AuthContext value={authData}>{children}</AuthContext>;

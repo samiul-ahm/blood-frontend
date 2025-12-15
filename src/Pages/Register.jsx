@@ -18,8 +18,10 @@ const Register = () => {
     const email = form.email.value;
     const photo = form.photo;
     const file = photo.files[0];
-    console.log(file);
+    const role = form.role.value;
     const password = form.password.value;
+
+    console.log(role);
 
     if (name.length < 5) {
       setNameError("Name Should be at least 6 character");
@@ -31,11 +33,11 @@ const Register = () => {
     const upperCase = /[A-Z]/;
     const lowerCase = /[a-z]/;
 
-    if(!upperCase.test(password)){
+    if (!upperCase.test(password)) {
       return alert("Need an Uppercase");
     }
-    if(!lowerCase.test(password)){
-      return alert("Need a lowercase");  
+    if (!lowerCase.test(password)) {
+      return alert("Need a lowercase");
     }
 
     console.log({ name, email, password, photo });
@@ -59,6 +61,7 @@ const Register = () => {
       email,
       mainPhotoUrl,
       password,
+      role,
     };
 
     if (res.data.success == true) {
@@ -133,6 +136,13 @@ const Register = () => {
               required
             />
 
+            {/* role */}
+            <select name="role" defaultValue="choose role" className="select">
+              <option disabled={true}>Choose a Role</option>
+              <option value="manager">Manager</option>
+              <option value="buyer">Buyer</option>
+            </select>
+
             {/* password */}
             <label className="label">Password</label>
             <input
@@ -147,9 +157,7 @@ const Register = () => {
             </button>
             <p className="font-semibold text-center mt-2">
               Already have an account?
-              <Link className="text-secondary ml-1" to={"/auth/login"}>
-                Login
-              </Link>
+              <Link to="/login" className="text-secondary ml-1">Login</Link>
             </p>
           </fieldset>
         </form>
