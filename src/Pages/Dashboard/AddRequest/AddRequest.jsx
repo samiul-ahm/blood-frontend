@@ -4,7 +4,8 @@ import { AuthContext } from "../../../provider/AuthProvider";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import useAxios from "../../../hooks/useAxios";
+// import useAxios from "../../../hooks/useAxios";
+import useAxiosSecure from "../../../hooks/UseAxiosSecure";
 
 const AddRequest = () => {
   const { user } = useContext(AuthContext);
@@ -15,7 +16,8 @@ const AddRequest = () => {
   const [district, setDistrict] = useState("");
   const [upazilla, setUpazilla] = useState("");
 
-  const axiosInstance = useAxios();
+  // const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     axios.get("/upazilla.json").then((res) => {
@@ -57,7 +59,7 @@ const AddRequest = () => {
       donation_status: "pending",
     };
 
-    axiosInstance
+    axiosSecure
       .post("/requests", formData)
       .then((res) => {
         alert(res.data.insertedId);
