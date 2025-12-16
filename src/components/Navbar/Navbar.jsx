@@ -86,7 +86,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link to={"/dashboard/main"} className="btn mr-2">Dashborad</Link>
+        <Link to={"/dashboard"} className="btn mr-2">Dashborad</Link>
         {user? (
           <button onClick={handleLogout} className="btn">Logout</button>
         ) : (

@@ -2,8 +2,26 @@ import React, { use, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../provider/AuthProvider";
 import axios from "axios";
+import { useEffect } from "react";
 
 const Register = () => {
+  const [upazillas, setUpazillas] = useState([]);
+  const [districts, setDistricts] = useState([]);
+
+  const [district, setDistrict] = useState('');
+  const [upazilla, setUpazilla] = useState('');
+
+  useEffect(() => {
+    axios.get("./upazilla.json").then((res) => {
+      setUpazillas(res.data.upazilas);
+    });
+    axios.get("./district.json").then((res) => {
+      setDistricts(res.data.districts);
+    });
+  }, []);
+
+  // console.log(districts, upazillas);
+
   const { createUser, setUser, updateUser } = use(AuthContext);
 
   const [nameError, setNameError] = useState("");
@@ -18,10 +36,8 @@ const Register = () => {
     const email = form.email.value;
     const photo = form.photo;
     const file = photo.files[0];
-    const role = form.role.value;
+    const bloodGroup = form.bloodGroup.value;
     const password = form.password.value;
-
-    console.log(role);
 
     if (name.length < 5) {
       setNameError("Name Should be at least 6 character");
@@ -61,8 +77,12 @@ const Register = () => {
       email,
       mainPhotoUrl,
       password,
-      role,
+      bloodGroup,
+      district,
+      upazilla
     };
+
+    console.log(formData);
 
     if (res.data.success == true) {
       createUser(email, password)
@@ -136,11 +156,58 @@ const Register = () => {
               required
             />
 
-            {/* role */}
-            <select name="role" defaultValue="choose role" className="select">
-              <option disabled={true}>Choose a Role</option>
-              <option value="manager">Manager</option>
-              <option value="buyer">Buyer</option>
+            {/* blood group */}
+            <label className="label">Blood Group</label>
+            <select name="bloodGroup" defaultValue="Select your Blood grooup" className="select" required>
+              <option disabled  >Select blood group</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+
+            {/* districts */}
+            <label className="label">Select your district</label>
+            <select onChange={(e)=>setDistrict(e.target.value)}
+              defaultValue="select your district"
+              className="select appearance-none"
+            >
+              <option disabled defaultValue="select your district">Select your district</option>
+
+              {districts.map((district) => (
+                <option
+                  value={district?.name}
+                  key={district.id}
+                  className="input"
+                >
+                  {district?.name}
+                </option>
+              ))}
+            </select>
+
+
+            {/* upazilla */}
+
+            <label className="label">Select your upazilla</label>
+            <select onChange={(e)=>setUpazilla(e.target.value)}
+              defaultValue="select your district"
+              className="select appearance-none"
+            >
+              <option disabled defaultValue="select your upazilla">Select your  upazila</option>
+
+              {upazillas.map((upazila) => (
+                <option
+                  value={upazila?.name}
+                  key={upazila.id}
+                  className="input"
+                >
+                  {upazila?.name}
+                </option>
+              ))}
             </select>
 
             {/* password */}
@@ -157,7 +224,9 @@ const Register = () => {
             </button>
             <p className="font-semibold text-center mt-2">
               Already have an account?
-              <Link to="/login" className="text-secondary ml-1">Login</Link>
+              <Link to="/login" className="text-secondary ml-1">
+                Login
+              </Link>
             </p>
           </fieldset>
         </form>
