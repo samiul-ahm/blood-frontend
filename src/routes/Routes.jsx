@@ -6,6 +6,8 @@ import Register from "../Pages/Register";
 import DashboardLayout from "../DashboardLayout/DashboardLayout";
 import MainDashboard from "../Pages/Dashboard/MainDashboard/MainDashboard";
 import AddRequest from "../Pages/Dashboard/AddRequest/AddRequest";
+import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
+import PrivateRoute from "../provider/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +30,11 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <DashboardLayout></DashboardLayout>,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "/dashboard",
@@ -37,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "add-request",
         Component: AddRequest,
+      },
+      {
+        path: "all-users",
+        Component: AllUsers,
       },
     ],
   },

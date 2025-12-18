@@ -18,6 +18,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState("");
+  const [roleLoading, setRoleLoading] = useState(true);
 
   // console.log(loading, user);
 
@@ -57,6 +58,7 @@ const AuthProvider = ({ children }) => {
     if (!user) return;
     axios.get(`http://localhost:5000/users/role/${user.email}`).then((res) => {
       setRole(res.data.role);
+      setRoleLoading(false);
     });
   }, [user]);
 
@@ -71,7 +73,8 @@ const AuthProvider = ({ children }) => {
     loading,
     setLoading,
     updateUser,
-    role
+    role,
+    roleLoading
   };
 
   return <AuthContext value={authData}>{children}</AuthContext>;

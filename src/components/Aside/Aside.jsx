@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { NavLink } from "react-router";
+import { useContext, useState } from "react";
 import {
   LayoutDashboard,
   UserPlus,
@@ -9,16 +8,39 @@ import {
   Menu,
   ChevronLeft,
 } from "lucide-react";
+import { AuthContext } from "../../provider/AuthProvider";
+import { NavLink } from "react-router";
 
 export default function Aside() {
   const [collapsed, setCollapsed] = useState(false);
 
+  const { role, logOut } = useContext(AuthContext);
   const navItems = [
     { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard" },
-    { label: "Add Request", icon: UserPlus, to: "/dashboard/add-request" },
-    { label: "Reports", icon: FileText, to: "/dashboard/reports" },
+
+    role == "donar" && {
+      label: "Add Request",
+      icon: UserPlus,
+      to: "/dashboard/add-request",
+    },
+
+    role == "admin" && {
+      label: "All Users",
+      icon: FileText,
+      to: "/dashboard/all-users",
+    },
     { label: "Settings", icon: Settings, to: "/dashboard/settings" },
-  ];
+  ].filter(Boolean);
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        alert("You have been logged out");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <aside
@@ -62,7 +84,10 @@ export default function Aside() {
 
       {/* Footer */}
       <div className="px-2 py-4 border-t border-slate-800">
-        <button className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium hover:bg-red-500/10 hover:text-red-400 transition">
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium hover:bg-red-500/10 hover:text-red-400 transition"
+        >
           <LogOut size={20} />
           {!collapsed && <span>Logout</span>}
         </button>
