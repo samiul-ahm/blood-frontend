@@ -29,7 +29,6 @@ export default function Aside() {
       icon: FileText,
       to: "/dashboard/all-users",
     },
-    { label: "Settings", icon: Settings, to: "/dashboard/settings" },
   ].filter(Boolean);
 
   const handleLogout = () => {
