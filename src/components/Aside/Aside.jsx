@@ -2,8 +2,8 @@ import { useContext, useState } from "react";
 import {
   LayoutDashboard,
   UserPlus,
-  Settings,
   FileText,
+  SquareLibrary,
   LogOut,
   Menu,
   ChevronLeft,
@@ -15,6 +15,7 @@ export default function Aside() {
   const [collapsed, setCollapsed] = useState(false);
 
   const { role, logOut } = useContext(AuthContext);
+
   const navItems = [
     { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard" },
 
@@ -22,6 +23,11 @@ export default function Aside() {
       label: "Add Request",
       icon: UserPlus,
       to: "/dashboard/add-request",
+    },
+    role == "donar" && {
+      label: "My Request",
+      icon: SquareLibrary,
+      to: "/dashboard/my-request",
     },
 
     role == "admin" && {

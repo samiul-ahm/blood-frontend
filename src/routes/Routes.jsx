@@ -8,6 +8,7 @@ import MainDashboard from "../Pages/Dashboard/MainDashboard/MainDashboard";
 import AddRequest from "../Pages/Dashboard/AddRequest/AddRequest";
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 import PrivateRoute from "../provider/PrivateRoute";
+import MyRequest from "../Pages/Dashboard/MyRequest/MyRequest";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "all-users",
         Component: AllUsers,
+      },
+      {
+        path: "my-request",
+        Component: MyRequest,
       },
     ],
   },
