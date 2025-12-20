@@ -12,6 +12,7 @@ import MyRequest from "../Pages/Dashboard/MyRequest/MyRequest";
 import Donate from "../Pages/Donate/Donate";
 import PaymentSuccess from "../Pages/PaymentSuccess/PaymentSuccess";
 import SearchRequest from "../Pages/SearchRequest/SearchRequest";
+import AllRequest from "../Pages/AllRequest/AllRequest";
 
 const router = createBrowserRouter([
   {
@@ -43,9 +44,13 @@ const router = createBrowserRouter([
         Component: PaymentSuccess,
       },
       {
-        path:'/search',
-        element: <SearchRequest></SearchRequest>
-      }
+        path: "/search",
+        element: <SearchRequest></SearchRequest>,
+      },
+      {
+        path: "/all-request",
+        element: <AllRequest></AllRequest>,
+      },
     ],
   },
   {
