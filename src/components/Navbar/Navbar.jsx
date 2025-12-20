@@ -1,20 +1,20 @@
 import React, { useContext } from "react";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../provider/AuthProvider";
 import Login from "../../Pages/Login";
 
 const Navbar = () => {
-  const { user, logOut} = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
 
-  const handleLogout = () =>{
+  const handleLogout = () => {
     logOut()
-    .then(()=>{
-      alert("You have been logged out");
-    })
-    .catch((err)=>{
-      console.log(err);
-    })
-  }
+      .then(() => {
+        alert("You have been logged out");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="navbar bg-base-100 shadow-sm">
@@ -42,21 +42,13 @@ const Navbar = () => {
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
             <li>
-              <a>Item 1</a>
+              <NavLink>All request</NavLink>
             </li>
             <li>
-              <a>Parent</a>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
+              <NavLink>Search</NavLink>
             </li>
             <li>
-              <a>Item 3</a>
+              <Link to={"/donate"}>Donate</Link>
             </li>
           </ul>
         </div>
@@ -65,30 +57,24 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a>Item 1</a>
+            <NavLink>All request</NavLink>
           </li>
           <li>
-            <details>
-              <summary>Parent</summary>
-              <ul className="p-2 bg-base-100 w-40 z-1">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </details>
+            <NavLink>Search</NavLink>
           </li>
           <li>
-            <a>Item 3</a>
+            <Link to={"/donate"}>Donate</Link>
           </li>
         </ul>
       </div>
       <div className="navbar-end">
-        <Link to={"/dashboard"} className="btn mr-2">Dashborad</Link>
-        {user? (
-          <button onClick={handleLogout} className="btn">Logout</button>
+        <Link to={"/dashboard"} className="btn mr-2">
+          Dashborad
+        </Link>
+        {user ? (
+          <button onClick={handleLogout} className="btn">
+            Logout
+          </button>
         ) : (
           <Link to={"/login"} className="btn">
             Login

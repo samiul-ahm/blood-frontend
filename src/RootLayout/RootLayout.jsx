@@ -8,7 +8,7 @@ const RootLayout = () => {
       <header>
         <Navbar></Navbar>
       </header>
-      <main className="grow my-16">
+      <main className="grow my-12">
         <Outlet></Outlet>
       </main>
     </div>
