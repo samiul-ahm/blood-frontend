@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import useAxios from "../../hooks/useAxios";
+import { useNavigate } from "react-router";
 
 const SearchRequest = () => {
   const [upazillas, setUpazillas] = useState([]);
   const [districts, setDistricts] = useState([]);
+  const navigate = useNavigate(); 
 
   const [district, setDistrict] = useState("");
   const [upazilla, setUpazilla] = useState("");
@@ -138,7 +140,7 @@ const SearchRequest = () => {
                 </p>
 
                 <div className="card-actions justify-end mt-4">
-                  <button className="btn btn-sm btn-primary">
+                  <button  onClick={() => navigate(`/request/${item._id}`)}  className="btn btn-sm btn-primary">
                     View Details
                   </button>
                 </div>

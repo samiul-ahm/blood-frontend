@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import useAxios from "../../hooks/useAxios";
+import { Navigate, useNavigate } from "react-router";
 
 const AllRequest = () => {
   const axiosInstance = useAxios();
-
+ const navigate = useNavigate();
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -30,6 +31,7 @@ const AllRequest = () => {
       .finally(() => setLoading(false));
   }, [page, axiosInstance]);
 
+  console.log(requests);
   if (loading) {
     return <p className="text-center mt-10">Loading...</p>;
   }
@@ -47,10 +49,7 @@ const AllRequest = () => {
           {/* Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {requests.map((item) => (
-              <div
-                key={item._id}
-                className="card bg-base-100 shadow-md border"
-              >
+              <div key={item._id} className="card bg-base-100 shadow-md border">
                 <div className="card-body">
                   <h2 className="card-title text-red-600">
                     Blood Group: {item.bloodGroup}
@@ -76,9 +75,13 @@ const AllRequest = () => {
                   <p>
                     <strong>Hospital:</strong> {item.hospital}
                   </p>
+                  <p><strong>Status:</strong>{item.donation_status}</p>
 
                   <div className="card-actions justify-end">
-                    <button className="btn btn-sm btn-primary">
+                    <button
+                      className="btn btn-sm btn-primary"
+                       onClick={() => navigate(`/request/${item._id}`)} 
+                    >
                       View Details
                     </button>
                   </div>

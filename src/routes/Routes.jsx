@@ -13,6 +13,7 @@ import Donate from "../Pages/Donate/Donate";
 import PaymentSuccess from "../Pages/PaymentSuccess/PaymentSuccess";
 import SearchRequest from "../Pages/SearchRequest/SearchRequest";
 import AllRequest from "../Pages/AllRequest/AllRequest";
+import RequestDetails from "../Pages/RequestDetails.jsx/RequestDetails";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,14 @@ const router = createBrowserRouter([
       {
         path: "/all-request",
         element: <AllRequest></AllRequest>,
+      },
+      {
+        path: "/request/:id",
+        element: (
+          <PrivateRoute>
+            <RequestDetails></RequestDetails>
+          </PrivateRoute>
+        ),
       },
     ],
   },
