@@ -11,6 +11,7 @@ import PrivateRoute from "../provider/PrivateRoute";
 import MyRequest from "../Pages/Dashboard/MyRequest/MyRequest";
 import Donate from "../Pages/Donate/Donate";
 import PaymentSuccess from "../Pages/PaymentSuccess/PaymentSuccess";
+import SearchRequest from "../Pages/SearchRequest/SearchRequest";
 
 const router = createBrowserRouter([
   {
@@ -31,12 +32,20 @@ const router = createBrowserRouter([
       },
       {
         path: "/donate",
-        Component: Donate,
+        element: (
+          <PrivateRoute>
+            <Donate></Donate>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/payment-success",
         Component: PaymentSuccess,
       },
+      {
+        path:'/search',
+        element: <SearchRequest></SearchRequest>
+      }
     ],
   },
   {

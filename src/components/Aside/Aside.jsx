@@ -15,6 +15,15 @@ export default function Aside() {
   const [collapsed, setCollapsed] = useState(false);
 
   const { role, logOut } = useContext(AuthContext);
+  const panelTitle =
+  role === "admin"
+    ? "Admin Panel"
+    : role === "donar"
+    ? "User Panel"
+    : role === "volunteer"
+    ? "Volunteer Panel"
+    : "Dashboard";
+
 
   const navItems = [
     { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard" },
@@ -56,7 +65,7 @@ export default function Aside() {
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-4 border-b border-slate-800">
         {!collapsed && (
-          <h1 className="text-lg font-semibold tracking-wide">Admin Panel</h1>
+          <h1 className="text-lg font-semibold tracking-wide">{panelTitle}</h1>
         )}
         <button
           onClick={() => setCollapsed(!collapsed)}

@@ -52,7 +52,7 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <a className="btn btn-ghost text-xl">Bloood Bank</a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
@@ -60,7 +60,7 @@ const Navbar = () => {
             <NavLink>All request</NavLink>
           </li>
           <li>
-            <NavLink>Search</NavLink>
+            <NavLink to={'/search'}>Search</NavLink>
           </li>
           <li>
             <Link to={"/donate"}>Donate</Link>
