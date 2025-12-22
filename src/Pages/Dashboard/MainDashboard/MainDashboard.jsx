@@ -13,7 +13,7 @@ const MainDashboard = () => {
     return <DonorDashboard />;
   }
 
-  if (role === "admin") {
+  if (role === "admin" || role === "volunteer") {
     return <AdminDashboard />;
   }
 

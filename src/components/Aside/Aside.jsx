@@ -10,20 +10,20 @@ import {
 } from "lucide-react";
 import { AuthContext } from "../../provider/AuthProvider";
 import { NavLink } from "react-router";
+import Swal from "sweetalert2";
 
 export default function Aside() {
   const [collapsed, setCollapsed] = useState(false);
 
   const { role, logOut } = useContext(AuthContext);
   const panelTitle =
-  role === "admin"
-    ? "Admin Panel"
-    : role === "donar"
-    ? "User Panel"
-    : role === "volunteer"
-    ? "Volunteer Panel"
-    : "Dashboard";
-
+    role === "admin"
+      ? "Admin Panel"
+      : role === "donar"
+      ? "User Panel"
+      : role === "volunteer"
+      ? "Volunteer Panel"
+      : "Dashboard";
 
   const navItems = [
     { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard" },
@@ -39,17 +39,34 @@ export default function Aside() {
       to: "/dashboard/my-request",
     },
 
-    role == "admin" && {
+    (role === "admin" || role === "volunteer") && {
+      label: "All Donation Requests",
+      icon: FileText, // or use SquareLibrary
+      to: "/dashboard/all-blood-donation-request",
+    },
+
+    // Admin specific
+    role === "admin" && {
       label: "All Users",
       icon: FileText,
       to: "/dashboard/all-users",
     },
+
+    // (role === "admin" || role === "volunteer") && {
+    //   label: "All Users",
+    //   icon: FileText,
+    //   to: "/dashboard/all-users",
+    // },
   ].filter(Boolean);
 
   const handleLogout = () => {
     logOut()
       .then(() => {
-        alert("You have been logged out");
+        // alert("You have been logged out");
+        Swal.fire({
+          title: "You have successfully logged out",
+          icon: "success",
+        });
       })
       .catch((err) => {
         console.log(err);

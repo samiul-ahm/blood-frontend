@@ -14,6 +14,7 @@ import PaymentSuccess from "../Pages/PaymentSuccess/PaymentSuccess";
 import SearchRequest from "../Pages/SearchRequest/SearchRequest";
 import AllRequest from "../Pages/AllRequest/AllRequest";
 import RequestDetails from "../Pages/RequestDetails.jsx/RequestDetails";
+import AllDonationRequests from "../Pages/AllDonationRequests/AllDonationRequests";
 
 const router = createBrowserRouter([
   {
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
       {
         path: "my-request",
         Component: MyRequest,
+      },
+      {
+        path: "all-blood-donation-request",
+        element: <AllDonationRequests />,
       },
     ],
   },

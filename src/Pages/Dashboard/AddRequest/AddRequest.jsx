@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 // import useAxios from "../../../hooks/useAxios";
 
 const AddRequest = () => {
@@ -62,10 +63,22 @@ const AddRequest = () => {
     axiosSecure
       .post("/requests", formData)
       .then((res) => {
-        alert(res.data.insertedId);
+      if (res.data.insertedId) {
+          form.reset(); 
+
+          setDistrict("");
+          setUpazilla("");
+
+          Swal.fire({
+            title: "Success!",
+            text: "You have successfully inserted a request",
+            icon: "success",
+          });
+        }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
+        Swal.fire("Error", "Something went wrong", "error");
       });
   };
 
@@ -119,7 +132,9 @@ const AddRequest = () => {
             className=" w-full px-4 py-2 border rounded"
             required
           >
-            <option value="" disabled>Select blood group</option>
+            <option value="" disabled>
+              Select blood group
+            </option>
             <option value="A+">A+</option>
             <option value="A-">A-</option>
             <option value="B+">B+</option>
@@ -135,7 +150,8 @@ const AddRequest = () => {
         <div>
           <label className="block mb-1 font-medium">District</label>
           <select
-            value={district} required
+            value={district}
+            required
             onChange={(e) => setDistrict(e.target.value)}
             name="recepient_district"
             className="w-full px-4 py-2 border rounded"
@@ -160,7 +176,8 @@ const AddRequest = () => {
           <select
             value={upazilla}
             name="recepient_upazilla"
-            onChange={(e) => setUpazilla(e.target.value)} required
+            onChange={(e) => setUpazilla(e.target.value)}
+            required
             className="w-full px-4 py-2 border rounded"
           >
             <option value="">Select your upazila</option>

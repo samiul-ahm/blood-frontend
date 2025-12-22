@@ -22,9 +22,7 @@ const AdminDashboard = () => {
     <div className="p-6">
       <h1 className="text-3xl font-bold mb-6">Welcome, {user?.displayName}! </h1>
       
-      {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Total Users */}
         <div className="bg-white shadow-lg rounded-xl p-6 flex items-center space-x-4 border-l-4 border-blue-500">
           <div className="p-3 bg-blue-100 rounded-full">
             {/* <FaUsers className="text-blue-500 text-2xl" /> */}
@@ -35,7 +33,6 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Total Funding */}
         <div className="bg-white shadow-lg rounded-xl p-6 flex items-center space-x-4 border-l-4 border-green-500">
           <div className="p-3 bg-green-100 rounded-full">
             {/* <FaHandHoldingHeart className="text-green-500 text-2xl" /> */}
@@ -46,7 +43,6 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Total Requests */}
         <div className="bg-white shadow-lg rounded-xl p-6 flex items-center space-x-4 border-l-4 border-red-500">
           <div className="p-3 bg-red-100 rounded-full">
             {/* <FaDonate className="text-red-500 text-2xl" /> */}

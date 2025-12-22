@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../provider/AuthProvider";
 import Login from "../../Pages/Login";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -9,7 +10,11 @@ const Navbar = () => {
   const handleLogout = () => {
     logOut()
       .then(() => {
-        alert("You have been logged out");
+        // alert("You have been logged out");
+        Swal.fire({
+          title: "You have successfully logged out!",
+          icon: "success",
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -52,7 +57,9 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <NavLink to={'/'} className="btn btn-ghost text-xl">Bloood Bank</NavLink>
+        <NavLink to={"/"} className="btn btn-ghost text-xl">
+          Bloood Bank
+        </NavLink>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
