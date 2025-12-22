@@ -125,10 +125,10 @@ const AllUsers = () => {
       });
   };
 
-  // NEW: Handle Role Change (Make Volunteer/Admin)
+  //  (Make Volunteer/Admin)
   const handleRole = (email, role) => {
     axiosSecure
-      .patch(`/users/role/${email}`, { role }) // Match the backend route we'll create
+      .patch(`/users/role/${email}`, { role }) 
       .then((res) => {
         if (res.data.modifiedCount > 0) {
           setUsers((prev) =>

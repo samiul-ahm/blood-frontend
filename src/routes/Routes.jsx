@@ -15,11 +15,13 @@ import SearchRequest from "../Pages/SearchRequest/SearchRequest";
 import AllRequest from "../Pages/AllRequest/AllRequest";
 import RequestDetails from "../Pages/RequestDetails.jsx/RequestDetails";
 import AllDonationRequests from "../Pages/AllDonationRequests/AllDonationRequests";
+import ErrorPage from "../Pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout></RootLayout>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
@@ -65,6 +67,7 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
+    errorElement: <ErrorPage />,
     element: (
       <PrivateRoute>
         <DashboardLayout></DashboardLayout>
