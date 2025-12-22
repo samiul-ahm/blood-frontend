@@ -16,8 +16,8 @@ const PaymentSuccess = () => {
     },[axiosInstance, sessionId])
 
     return (
-        <div>
-            Success
+        <div className='max-w-4xl h-48 rounded-2xl shadow-2xl flex items-center justify-center mx-auto my-16 bg-cyan-600'>
+            <h2 className='text-4xl font-bold'>You have successfully donated</h2>
         </div>
     );
 };
