@@ -52,15 +52,15 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">Bloood Bank</a>
+        <NavLink to={'/'} className="btn btn-ghost text-xl">Bloood Bank</NavLink>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <NavLink to={'/all-request'}>All request</NavLink>
+            <NavLink to={"/all-request"}>All request</NavLink>
           </li>
           <li>
-            <NavLink to={'/search'}>Search</NavLink>
+            <NavLink to={"/search"}>Search</NavLink>
           </li>
           <li>
             <Link to={"/donate"}>Donate</Link>
@@ -68,15 +68,18 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link to={"/dashboard"} className="btn mr-2">
-          Dashborad
-        </Link>
+        {user && (
+          <Link to={"/dashboard"} className="btn mr-2 bg-pink-400">
+            Dashborad
+          </Link>
+        )}
+
         {user ? (
-          <button onClick={handleLogout} className="btn">
+          <button onClick={handleLogout} className="btn btn-neutral">
             Logout
           </button>
         ) : (
-          <Link to={"/login"} className="btn">
+          <Link to={"/login"} className="btn btn-secondary">
             Login
           </Link>
         )}

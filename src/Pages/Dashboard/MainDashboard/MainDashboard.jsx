@@ -1,11 +1,23 @@
-import React from 'react';
+import AdminDashboard from "../../../components/AdminDashboard/AdminDashboard";
+import DonorDashboard from "../../../components/DonarDashboard/DonarDashboard";
+import useUserRole from "../../../hooks/useUserRole";
 
 const MainDashboard = () => {
-    return (
-        <div>
-            <h2>main dashboard</h2>
-        </div>
-    );
+  const { role, roleLoading } = useUserRole();
+
+  if (roleLoading) {
+    return <p className="text-center mt-10">Loading dashboard...</p>;
+  }
+
+  if (role === "donar") {
+    return <DonorDashboard />;
+  }
+
+  if (role === "admin") {
+    return <AdminDashboard />;
+  }
+
+  return <p>Unauthorized</p>;
 };
 
 export default MainDashboard;

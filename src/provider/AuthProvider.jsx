@@ -56,14 +56,40 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  useEffect(() => {
-    if (!user) return;
-    axios.get(`http://localhost:5000/users/role/${user.email}`).then((res) => {
+  // useEffect(() => {
+  //   if (!user) return;
+  //   axios.get(`http://localhost:5000/users/role/${user.email}`).then((res) => {
+  //     setRole(res.data.role);
+  //     setUserStatus(res.data.status);
+  //     setRoleLoading(false);
+  //   });
+  // }, [user]);
+
+useEffect(() => {
+  if (!user) {
+    setRole("");
+    setUserStatus("");
+    setRoleLoading(false); 
+    return;
+  }
+
+  setRoleLoading(true);
+
+  axios
+    .get(`http://localhost:5000/users/role/${user.email}`)
+    .then((res) => {
       setRole(res.data.role);
       setUserStatus(res.data.status);
+    })
+    .catch(() => {
+      setRole("");
+      setUserStatus("");
+    })
+    .finally(() => {
       setRoleLoading(false);
     });
-  }, [user]);
+}, [user]);
+
 
   console.log(role);
 
@@ -81,7 +107,7 @@ const AuthProvider = ({ children }) => {
     userStatus,
   };
 
-  return <AuthContext value={authData}>{children}</AuthContext>;
+  return <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;
